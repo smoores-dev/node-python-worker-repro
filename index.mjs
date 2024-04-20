@@ -1,19 +1,13 @@
-import { Piscina } from 'piscina'
 import { join } from 'node:path'
 import { cwd } from 'node:process'
+import { Worker } from 'node:worker_threads'
 
-const controller = new AbortController()
-
-const piscina = new Piscina({
-  filename: join(cwd(), 'worker.js'),
-  maxThreads: 1,
-})
-
-piscina.run(null, { signal: controller.signal })
+const worker = new Worker(join(cwd(), 'worker.js'))
+worker.postMessage('')
 
 setTimeout(async () => {
   console.log('terminating worker')
-  controller.abort()
+  await worker.terminate()
   console.log('terminated worker')
 }, 6000)
 
