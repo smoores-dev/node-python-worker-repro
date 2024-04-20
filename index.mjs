@@ -1,6 +1,8 @@
-import sleepAsync from './worker.js'
+import { Worker } from 'node:worker_threads'
+import { join } from 'node:path'
+import { cwd } from 'node:process'
 
-const worker = sleepAsync()
+const worker = new Worker(join(cwd(), 'worker.js'))
 
 setTimeout(() => {
   worker.terminate()
