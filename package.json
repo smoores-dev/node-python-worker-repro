@@ -1,0 +1,22 @@
+{
+  "name": "python-worker-repro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smoores-dev/node-python-worker-repro.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smoores-dev/node-python-worker-repro/issues"
+  },
+  "homepage": "https://github.com/smoores-dev/node-python-worker-repro#readme",
+  "dependencies": {
+    "pymport": "^1.5.1"
+  }
+}
