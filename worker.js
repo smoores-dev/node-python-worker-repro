@@ -1,16 +1,10 @@
-const {
-  Worker, isMainThread, parentPort,
-} = require('node:worker_threads');
+const { cwd } = require('node:process');
+const { interpreter: py } = require('node-calls-python');
 
-if (isMainThread) {
-  module.exports = function sleepAsync() {
-    return new Worker(__filename);
-  };
-} else {
-  const { proxify, pymport } = require('pymport');
+py.addImportPath(cwd())
+const busy = py.importSync('busy', false);
 
-  const time = proxify(pymport('time'));
-  time.sleep(3);
-  parentPort?.postMessage('started sleeping');
-  parentPort?.postMessage('finished sleeping');
+module.exports = async function run() {
+  await py.call(busy, 'busy');
+  console.log('done')
 } 

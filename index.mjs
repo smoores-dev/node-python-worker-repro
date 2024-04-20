@@ -1,7 +1,19 @@
-import sleepAsync from './worker.js'
+import { Piscina } from 'piscina'
+import { join } from 'node:path'
+import { cwd } from 'node:process'
 
-const worker = sleepAsync()
+const controller = new AbortController()
 
-setTimeout(() => {
-  worker.terminate()
-}, 2000)
+const piscina = new Piscina({
+  filename: join(cwd(), 'worker.js'),
+  maxThreads: 1,
+})
+
+piscina.run(null, { signal: controller.signal })
+
+setTimeout(async () => {
+  console.log('terminating worker')
+  controller.abort()
+  console.log('terminated worker')
+}, 6000)
+
